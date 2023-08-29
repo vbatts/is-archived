@@ -30,3 +30,15 @@ Go create a personal access token (PAT) on your [Github Setting](https://github.
 ```shell
 export GITHUB_TOKEN=<your_github_pat>
 ```
+
+## Roadmap Ideas
+
+- [x] github repo API
+- [ ] gitlab project API (like https://docs.gitlab.com/ee/api/projects.html#get-single-project)
+- [ ] bitbucket project API (like https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-get)
+- [ ] not just golang `go.mod`
+  - [ ] javascript `packages.json`
+  - [ ] rust `Cargo.toml`
+- [ ] golang to pull-through the HTML `<meta name="go-import" ...` redirects
+- [ ] detect if stdout is terminal or pipe. If Terminal, then get fancy with [bubbletea](https://github.com/charmbracelet/bubbletea)
+
