@@ -9,6 +9,7 @@ import (
 
 	"github.com/google/go-github/v54/github"
 	"github.com/sirupsen/logrus"
+	"golang.org/x/oauth2"
 )
 
 /*
@@ -18,17 +19,35 @@ Testing using `go mod edit -json > mod.json`.
 This could be done as a file, or subshell or on std-in.
 */
 func main() {
+	ctx := context.Background()
+
+	// get modfile buffer
 	buf, err := os.ReadFile("mod.json") // ... do better ...
 	if err != nil {
 		logrus.Fatal(err)
 	}
+
+	// get modfile struct
 	m := Mod{}
 	err = json.Unmarshal(buf, &m)
 	if err != nil {
 		logrus.Fatal(err)
 	}
 
-	client := github.NewClient(nil)
+	var client *github.Client
+	if os.Getenv("GITHUB_TOKEN") != "" {
+		// query Github for each repo
+		// needs PAT for rate limiting ...
+
+		ts := oauth2.StaticTokenSource(
+			&oauth2.Token{AccessToken: os.Getenv("GITHUB_TOKEN")},
+		)
+		tc := oauth2.NewClient(ctx, ts)
+		client = github.NewClient(tc)
+	} else {
+		client = github.NewClient(nil)
+	}
+
 	for _, req := range m.Require {
 		if !strings.HasPrefix(req.Path, "github.com") {
 			continue
@@ -36,7 +55,7 @@ func main() {
 
 		spl := strings.Split(req.Path, "/")
 
-		repo, _, err := client.Repositories.Get(context.Background(), spl[1], spl[2])
+		repo, _, err := client.Repositories.Get(ctx, spl[1], spl[2])
 		if err != nil {
 			logrus.Fatal(err)
 		}
