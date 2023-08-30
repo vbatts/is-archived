@@ -39,6 +39,6 @@ export GITHUB_TOKEN=<your_github_pat>
 - [ ] not just golang `go.mod`
   - [ ] javascript `packages.json`
   - [ ] rust `Cargo.toml`
-- [ ] golang to pull-through the HTML `<meta name="go-import" ...` redirects
+- [x] golang to pull-through the HTML `<meta name="go-import" ...` redirects
 - [ ] detect if stdout is terminal or pipe. If Terminal, then get fancy with [bubbletea](https://github.com/charmbracelet/bubbletea)
 

@@ -6,12 +6,14 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	urlpkg "net/url"
 	"os"
 	"os/exec"
 	"strings"
 
 	"github.com/google/go-github/v54/github"
 	"github.com/sirupsen/logrus"
+	"github.com/vbatts/is-archived/pkg/vcs"
 	"golang.org/x/oauth2"
 )
 
@@ -71,22 +73,49 @@ func main() {
 		client = github.NewClient(nil)
 	}
 
-	// get a pretty number to show
-	n := 0
+	// collect the list first
+	toCheck := []Check{}
 	for _, req := range m.Require {
 		if !strings.HasPrefix(req.Path, "github.com") {
+			_, mi, err := vcs.MetaImportForPath(req.Path)
+			if err == nil { // ignoring this error as we'll just skip and continue ...
+				if len(mi) == 0 {
+					// we didn't get any meta imports from that import path
+					logrus.Debugf("skipping %q as it had no HTML Meta go-imports", req.Path)
+					continue
+				}
+				u, err := urlpkg.Parse(mi[0].RepoRoot)
+				if err != nil {
+					logrus.Debugf("skipping %q as %q didn't parse well: %v", req.Path, mi[0].RepoRoot, err)
+					continue
+				}
+				if u.Host != "github.com" {
+					logrus.Debugf("skipping %q for now, as it isn't github (%s)", req.Path, u.Host)
+					continue
+				}
+				toCheck = append(toCheck, Check{
+					Import: req.Path,
+					VcsUrl: u,
+				})
+			}
 			continue
 		}
-		n++
+
+		u, err := urlpkg.Parse(fmt.Sprintf("https://%s", req.Path))
+		if err != nil {
+			logrus.Debugf("skipping %q as %q didn't parse well: %v", req.Path, fmt.Sprintf("https://%s", req.Path), err)
+			continue
+		}
+		toCheck = append(toCheck, Check{
+			Import: req.Path,
+			VcsUrl: u,
+		})
+
 	}
-	logrus.Infof("checking %d github projects ...", n)
 
-	for _, req := range m.Require {
-		if !strings.HasPrefix(req.Path, "github.com") {
-			continue
-		}
-
-		spl := strings.Split(req.Path, "/")
+	logrus.Infof("checking %d github projects ...", len(toCheck))
+	for _, check := range toCheck {
+		spl := strings.Split(check.VcsUrl.Path, "/")
 
 		repo, _, err := client.Repositories.Get(ctx, spl[1], spl[2])
 		if err != nil {
@@ -99,16 +128,16 @@ func main() {
 			logrus.Fatal(err)
 		}
 		if repo.GetArchived() {
-			if false {
-				buf, err := json.MarshalIndent(repo, "", "  ")
-				if err != nil {
-					logrus.Fatal(err)
-				}
-				fmt.Println(string(buf))
-			}
-			fmt.Printf("%q is archived\n", req.Path)
+			check.Archived = true
+			fmt.Printf("%q is archived (%s)\n", check.Import, check.VcsUrl.String())
 		}
 	}
+}
+
+type Check struct {
+	Import   string
+	VcsUrl   *urlpkg.URL
+	Archived bool
 }
 
 type Mod struct {
