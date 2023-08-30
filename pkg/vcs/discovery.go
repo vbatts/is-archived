@@ -59,7 +59,8 @@ func urlForImportPath(importPath string) (*urlpkg.URL, error) {
 	if len(path) == 0 {
 		path = "/"
 	}
-	return &urlpkg.URL{Host: host, Path: path, RawQuery: "go-get=1"}, nil
+	// (vb) this might should default to https, and failback, but then most http redirects to https...
+	return &urlpkg.URL{Scheme: "http", Host: host, Path: path, RawQuery: "go-get=1"}, nil
 }
 
 func MetaImportForPath(importPath string) (*urlpkg.URL, []MetaImport, error) {
