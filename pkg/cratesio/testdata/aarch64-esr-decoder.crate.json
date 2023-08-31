@@ -1,1 +1,272 @@
-{"categories":[{"category":"Development tools","crates_cnt":2676,"created_at":"2016-12-30T23:42:37.777395+00:00","description":"Crates that provide developer-facing features such as testing, debugging, linting, performance profiling, autocompletion, formatting, and more.","id":"development-tools","slug":"development-tools"}],"crate":{"badges":[],"categories":["development-tools"],"created_at":"2021-11-10T10:54:38.611411+00:00","description":"A library and command-line utility for decoding aarch64 Exception Syndrome Register values.","documentation":null,"downloads":618,"exact_match":false,"homepage":null,"id":"aarch64-esr-decoder","keywords":["aarch64","esr"],"links":{"owner_team":"/api/v1/crates/aarch64-esr-decoder/owner_team","owner_user":"/api/v1/crates/aarch64-esr-decoder/owner_user","owners":"/api/v1/crates/aarch64-esr-decoder/owners","reverse_dependencies":"/api/v1/crates/aarch64-esr-decoder/reverse_dependencies","version_downloads":"/api/v1/crates/aarch64-esr-decoder/downloads","versions":null},"max_stable_version":"0.2.3","max_version":"0.2.3","name":"aarch64-esr-decoder","newest_version":"0.2.3","recent_downloads":96,"repository":"https://github.com/google/aarch64-esr-decoder/","updated_at":"2023-07-04T18:28:41.239630+00:00","versions":[838819,643981,620079,454370,451382]},"keywords":[{"crates_cnt":22,"created_at":"2018-04-10T21:33:13.916961+00:00","id":"aarch64","keyword":"aarch64"},{"crates_cnt":2,"created_at":"2021-11-10T10:54:38.611411+00:00","id":"esr","keyword":"esr"}],"versions":[{"audit_actions":[{"action":"publish","time":"2023-07-04T18:28:41.239630+00:00","user":{"avatar":"https://avatars.githubusercontent.com/u/103097?v=4","id":104262,"login":"qwandor","name":"Andrew Walbran","url":"https://github.com/qwandor"}}],"checksum":"393d90af5f8706873e346b56b763286f1f0928d56230e356cb01cdce57ff33a4","crate":"aarch64-esr-decoder","crate_size":21824,"created_at":"2023-07-04T18:28:41.239630+00:00","dl_path":"/api/v1/crates/aarch64-esr-decoder/0.2.3/download","downloads":56,"features":{},"id":838819,"license":"Apache-2.0","links":{"authors":"/api/v1/crates/aarch64-esr-decoder/0.2.3/authors","dependencies":"/api/v1/crates/aarch64-esr-decoder/0.2.3/dependencies","version_downloads":"/api/v1/crates/aarch64-esr-decoder/0.2.3/downloads"},"num":"0.2.3","published_by":{"avatar":"https://avatars.githubusercontent.com/u/103097?v=4","id":104262,"login":"qwandor","name":"Andrew Walbran","url":"https://github.com/qwandor"},"readme_path":"/api/v1/crates/aarch64-esr-decoder/0.2.3/readme","rust_version":null,"updated_at":"2023-07-04T18:28:41.239630+00:00","yanked":false},{"audit_actions":[{"action":"publish","time":"2022-10-17T16:12:44.589100+00:00","user":{"avatar":"https://avatars.githubusercontent.com/u/103097?v=4","id":104262,"login":"qwandor","name":"Andrew Walbran","url":"https://github.com/qwandor"}}],"checksum":"933b10f2bd32c09417002288615d34d3904d39b3101e15c75a5abed1fac461af","crate":"aarch64-esr-decoder","crate_size":21719,"created_at":"2022-10-17T16:12:44.589100+00:00","dl_path":"/api/v1/crates/aarch64-esr-decoder/0.2.2/download","downloads":189,"features":{},"id":643981,"license":"Apache-2.0","links":{"authors":"/api/v1/crates/aarch64-esr-decoder/0.2.2/authors","dependencies":"/api/v1/crates/aarch64-esr-decoder/0.2.2/dependencies","version_downloads":"/api/v1/crates/aarch64-esr-decoder/0.2.2/downloads"},"num":"0.2.2","published_by":{"avatar":"https://avatars.githubusercontent.com/u/103097?v=4","id":104262,"login":"qwandor","name":"Andrew Walbran","url":"https://github.com/qwandor"},"readme_path":"/api/v1/crates/aarch64-esr-decoder/0.2.2/readme","rust_version":null,"updated_at":"2022-10-17T16:12:44.589100+00:00","yanked":false},{"audit_actions":[{"action":"publish","time":"2022-09-13T12:34:23.891634+00:00","user":{"avatar":"https://avatars.githubusercontent.com/u/103097?v=4","id":104262,"login":"qwandor","name":"Andrew Walbran","url":"https://github.com/qwandor"}}],"checksum":"5e3dc56a022e061b11220194f73c283225dcd71e6ef403d2a781bef103a9620d","crate":"aarch64-esr-decoder","crate_size":19070,"created_at":"2022-09-13T12:34:23.891634+00:00","dl_path":"/api/v1/crates/aarch64-esr-decoder/0.2.1/download","downloads":67,"features":{},"id":620079,"license":"Apache-2.0","links":{"authors":"/api/v1/crates/aarch64-esr-decoder/0.2.1/authors","dependencies":"/api/v1/crates/aarch64-esr-decoder/0.2.1/dependencies","version_downloads":"/api/v1/crates/aarch64-esr-decoder/0.2.1/downloads"},"num":"0.2.1","published_by":{"avatar":"https://avatars.githubusercontent.com/u/103097?v=4","id":104262,"login":"qwandor","name":"Andrew Walbran","url":"https://github.com/qwandor"},"readme_path":"/api/v1/crates/aarch64-esr-decoder/0.2.1/readme","rust_version":null,"updated_at":"2022-09-13T12:34:23.891634+00:00","yanked":false},{"audit_actions":[{"action":"publish","time":"2021-11-16T17:19:48.645391+00:00","user":{"avatar":"https://avatars.githubusercontent.com/u/103097?v=4","id":104262,"login":"qwandor","name":"Andrew Walbran","url":"https://github.com/qwandor"}}],"checksum":"d0f34c04ebaca5024b1c4278d1e131d21a95b3fec06f7927661f3ce8599974d4","crate":"aarch64-esr-decoder","crate_size":18107,"created_at":"2021-11-16T17:19:48.645391+00:00","dl_path":"/api/v1/crates/aarch64-esr-decoder/0.2.0/download","downloads":168,"features":{},"id":454370,"license":"Apache-2.0","links":{"authors":"/api/v1/crates/aarch64-esr-decoder/0.2.0/authors","dependencies":"/api/v1/crates/aarch64-esr-decoder/0.2.0/dependencies","version_downloads":"/api/v1/crates/aarch64-esr-decoder/0.2.0/downloads"},"num":"0.2.0","published_by":{"avatar":"https://avatars.githubusercontent.com/u/103097?v=4","id":104262,"login":"qwandor","name":"Andrew Walbran","url":"https://github.com/qwandor"},"readme_path":"/api/v1/crates/aarch64-esr-decoder/0.2.0/readme","rust_version":null,"updated_at":"2021-11-16T17:19:48.645391+00:00","yanked":false},{"audit_actions":[{"action":"publish","time":"2021-11-10T10:54:38.611411+00:00","user":{"avatar":"https://avatars.githubusercontent.com/u/103097?v=4","id":104262,"login":"qwandor","name":"Andrew Walbran","url":"https://github.com/qwandor"}}],"checksum":"021cee8c7d1f29b9ecde33edb9955012f13aa3c18d356d672df0d52f2a0b1214","crate":"aarch64-esr-decoder","crate_size":12243,"created_at":"2021-11-10T10:54:38.611411+00:00","dl_path":"/api/v1/crates/aarch64-esr-decoder/0.1.0/download","downloads":138,"features":{},"id":451382,"license":"Apache-2.0","links":{"authors":"/api/v1/crates/aarch64-esr-decoder/0.1.0/authors","dependencies":"/api/v1/crates/aarch64-esr-decoder/0.1.0/dependencies","version_downloads":"/api/v1/crates/aarch64-esr-decoder/0.1.0/downloads"},"num":"0.1.0","published_by":{"avatar":"https://avatars.githubusercontent.com/u/103097?v=4","id":104262,"login":"qwandor","name":"Andrew Walbran","url":"https://github.com/qwandor"},"readme_path":"/api/v1/crates/aarch64-esr-decoder/0.1.0/readme","rust_version":null,"updated_at":"2021-11-10T10:54:38.611411+00:00","yanked":false}]}
+{
+  "categories": [
+    {
+      "category": "Development tools",
+      "crates_cnt": 2676,
+      "created_at": "2016-12-30T23:42:37.777395+00:00",
+      "description": "Crates that provide developer-facing features such as testing, debugging, linting, performance profiling, autocompletion, formatting, and more.",
+      "id": "development-tools",
+      "slug": "development-tools"
+    }
+  ],
+  "crate": {
+    "badges": [],
+    "categories": [
+      "development-tools"
+    ],
+    "created_at": "2021-11-10T10:54:38.611411+00:00",
+    "description": "A library and command-line utility for decoding aarch64 Exception Syndrome Register values.",
+    "documentation": null,
+    "downloads": 618,
+    "exact_match": false,
+    "homepage": null,
+    "id": "aarch64-esr-decoder",
+    "keywords": [
+      "aarch64",
+      "esr"
+    ],
+    "links": {
+      "owner_team": "/api/v1/crates/aarch64-esr-decoder/owner_team",
+      "owner_user": "/api/v1/crates/aarch64-esr-decoder/owner_user",
+      "owners": "/api/v1/crates/aarch64-esr-decoder/owners",
+      "reverse_dependencies": "/api/v1/crates/aarch64-esr-decoder/reverse_dependencies",
+      "version_downloads": "/api/v1/crates/aarch64-esr-decoder/downloads",
+      "versions": null
+    },
+    "max_stable_version": "0.2.3",
+    "max_version": "0.2.3",
+    "name": "aarch64-esr-decoder",
+    "newest_version": "0.2.3",
+    "recent_downloads": 96,
+    "repository": "https://github.com/google/aarch64-esr-decoder/",
+    "updated_at": "2023-07-04T18:28:41.239630+00:00",
+    "versions": [
+      838819,
+      643981,
+      620079,
+      454370,
+      451382
+    ]
+  },
+  "keywords": [
+    {
+      "crates_cnt": 22,
+      "created_at": "2018-04-10T21:33:13.916961+00:00",
+      "id": "aarch64",
+      "keyword": "aarch64"
+    },
+    {
+      "crates_cnt": 2,
+      "created_at": "2021-11-10T10:54:38.611411+00:00",
+      "id": "esr",
+      "keyword": "esr"
+    }
+  ],
+  "versions": [
+    {
+      "audit_actions": [
+        {
+          "action": "publish",
+          "time": "2023-07-04T18:28:41.239630+00:00",
+          "user": {
+            "avatar": "https://avatars.githubusercontent.com/u/103097?v=4",
+            "id": 104262,
+            "login": "qwandor",
+            "name": "Andrew Walbran",
+            "url": "https://github.com/qwandor"
+          }
+        }
+      ],
+      "checksum": "393d90af5f8706873e346b56b763286f1f0928d56230e356cb01cdce57ff33a4",
+      "crate": "aarch64-esr-decoder",
+      "crate_size": 21824,
+      "created_at": "2023-07-04T18:28:41.239630+00:00",
+      "dl_path": "/api/v1/crates/aarch64-esr-decoder/0.2.3/download",
+      "downloads": 56,
+      "features": {},
+      "id": 838819,
+      "license": "Apache-2.0",
+      "links": {
+        "authors": "/api/v1/crates/aarch64-esr-decoder/0.2.3/authors",
+        "dependencies": "/api/v1/crates/aarch64-esr-decoder/0.2.3/dependencies",
+        "version_downloads": "/api/v1/crates/aarch64-esr-decoder/0.2.3/downloads"
+      },
+      "num": "0.2.3",
+      "published_by": {
+        "avatar": "https://avatars.githubusercontent.com/u/103097?v=4",
+        "id": 104262,
+        "login": "qwandor",
+        "name": "Andrew Walbran",
+        "url": "https://github.com/qwandor"
+      },
+      "readme_path": "/api/v1/crates/aarch64-esr-decoder/0.2.3/readme",
+      "rust_version": null,
+      "updated_at": "2023-07-04T18:28:41.239630+00:00",
+      "yanked": false
+    },
+    {
+      "audit_actions": [
+        {
+          "action": "publish",
+          "time": "2022-10-17T16:12:44.589100+00:00",
+          "user": {
+            "avatar": "https://avatars.githubusercontent.com/u/103097?v=4",
+            "id": 104262,
+            "login": "qwandor",
+            "name": "Andrew Walbran",
+            "url": "https://github.com/qwandor"
+          }
+        }
+      ],
+      "checksum": "933b10f2bd32c09417002288615d34d3904d39b3101e15c75a5abed1fac461af",
+      "crate": "aarch64-esr-decoder",
+      "crate_size": 21719,
+      "created_at": "2022-10-17T16:12:44.589100+00:00",
+      "dl_path": "/api/v1/crates/aarch64-esr-decoder/0.2.2/download",
+      "downloads": 189,
+      "features": {},
+      "id": 643981,
+      "license": "Apache-2.0",
+      "links": {
+        "authors": "/api/v1/crates/aarch64-esr-decoder/0.2.2/authors",
+        "dependencies": "/api/v1/crates/aarch64-esr-decoder/0.2.2/dependencies",
+        "version_downloads": "/api/v1/crates/aarch64-esr-decoder/0.2.2/downloads"
+      },
+      "num": "0.2.2",
+      "published_by": {
+        "avatar": "https://avatars.githubusercontent.com/u/103097?v=4",
+        "id": 104262,
+        "login": "qwandor",
+        "name": "Andrew Walbran",
+        "url": "https://github.com/qwandor"
+      },
+      "readme_path": "/api/v1/crates/aarch64-esr-decoder/0.2.2/readme",
+      "rust_version": null,
+      "updated_at": "2022-10-17T16:12:44.589100+00:00",
+      "yanked": false
+    },
+    {
+      "audit_actions": [
+        {
+          "action": "publish",
+          "time": "2022-09-13T12:34:23.891634+00:00",
+          "user": {
+            "avatar": "https://avatars.githubusercontent.com/u/103097?v=4",
+            "id": 104262,
+            "login": "qwandor",
+            "name": "Andrew Walbran",
+            "url": "https://github.com/qwandor"
+          }
+        }
+      ],
+      "checksum": "5e3dc56a022e061b11220194f73c283225dcd71e6ef403d2a781bef103a9620d",
+      "crate": "aarch64-esr-decoder",
+      "crate_size": 19070,
+      "created_at": "2022-09-13T12:34:23.891634+00:00",
+      "dl_path": "/api/v1/crates/aarch64-esr-decoder/0.2.1/download",
+      "downloads": 67,
+      "features": {},
+      "id": 620079,
+      "license": "Apache-2.0",
+      "links": {
+        "authors": "/api/v1/crates/aarch64-esr-decoder/0.2.1/authors",
+        "dependencies": "/api/v1/crates/aarch64-esr-decoder/0.2.1/dependencies",
+        "version_downloads": "/api/v1/crates/aarch64-esr-decoder/0.2.1/downloads"
+      },
+      "num": "0.2.1",
+      "published_by": {
+        "avatar": "https://avatars.githubusercontent.com/u/103097?v=4",
+        "id": 104262,
+        "login": "qwandor",
+        "name": "Andrew Walbran",
+        "url": "https://github.com/qwandor"
+      },
+      "readme_path": "/api/v1/crates/aarch64-esr-decoder/0.2.1/readme",
+      "rust_version": null,
+      "updated_at": "2022-09-13T12:34:23.891634+00:00",
+      "yanked": false
+    },
+    {
+      "audit_actions": [
+        {
+          "action": "publish",
+          "time": "2021-11-16T17:19:48.645391+00:00",
+          "user": {
+            "avatar": "https://avatars.githubusercontent.com/u/103097?v=4",
+            "id": 104262,
+            "login": "qwandor",
+            "name": "Andrew Walbran",
+            "url": "https://github.com/qwandor"
+          }
+        }
+      ],
+      "checksum": "d0f34c04ebaca5024b1c4278d1e131d21a95b3fec06f7927661f3ce8599974d4",
+      "crate": "aarch64-esr-decoder",
+      "crate_size": 18107,
+      "created_at": "2021-11-16T17:19:48.645391+00:00",
+      "dl_path": "/api/v1/crates/aarch64-esr-decoder/0.2.0/download",
+      "downloads": 168,
+      "features": {},
+      "id": 454370,
+      "license": "Apache-2.0",
+      "links": {
+        "authors": "/api/v1/crates/aarch64-esr-decoder/0.2.0/authors",
+        "dependencies": "/api/v1/crates/aarch64-esr-decoder/0.2.0/dependencies",
+        "version_downloads": "/api/v1/crates/aarch64-esr-decoder/0.2.0/downloads"
+      },
+      "num": "0.2.0",
+      "published_by": {
+        "avatar": "https://avatars.githubusercontent.com/u/103097?v=4",
+        "id": 104262,
+        "login": "qwandor",
+        "name": "Andrew Walbran",
+        "url": "https://github.com/qwandor"
+      },
+      "readme_path": "/api/v1/crates/aarch64-esr-decoder/0.2.0/readme",
+      "rust_version": null,
+      "updated_at": "2021-11-16T17:19:48.645391+00:00",
+      "yanked": false
+    },
+    {
+      "audit_actions": [
+        {
+          "action": "publish",
+          "time": "2021-11-10T10:54:38.611411+00:00",
+          "user": {
+            "avatar": "https://avatars.githubusercontent.com/u/103097?v=4",
+            "id": 104262,
+            "login": "qwandor",
+            "name": "Andrew Walbran",
+            "url": "https://github.com/qwandor"
+          }
+        }
+      ],
+      "checksum": "021cee8c7d1f29b9ecde33edb9955012f13aa3c18d356d672df0d52f2a0b1214",
+      "crate": "aarch64-esr-decoder",
+      "crate_size": 12243,
+      "created_at": "2021-11-10T10:54:38.611411+00:00",
+      "dl_path": "/api/v1/crates/aarch64-esr-decoder/0.1.0/download",
+      "downloads": 138,
+      "features": {},
+      "id": 451382,
+      "license": "Apache-2.0",
+      "links": {
+        "authors": "/api/v1/crates/aarch64-esr-decoder/0.1.0/authors",
+        "dependencies": "/api/v1/crates/aarch64-esr-decoder/0.1.0/dependencies",
+        "version_downloads": "/api/v1/crates/aarch64-esr-decoder/0.1.0/downloads"
+      },
+      "num": "0.1.0",
+      "published_by": {
+        "avatar": "https://avatars.githubusercontent.com/u/103097?v=4",
+        "id": 104262,
+        "login": "qwandor",
+        "name": "Andrew Walbran",
+        "url": "https://github.com/qwandor"
+      },
+      "readme_path": "/api/v1/crates/aarch64-esr-decoder/0.1.0/readme",
+      "rust_version": null,
+      "updated_at": "2021-11-10T10:54:38.611411+00:00",
+      "yanked": false
+    }
+  ]
+}
