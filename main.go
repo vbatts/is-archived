@@ -2,19 +2,18 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"flag"
 	"fmt"
-	"io"
 	urlpkg "net/url"
 	"os"
-	"os/exec"
 	"strings"
 
 	"github.com/google/go-github/v54/github"
 	"github.com/sirupsen/logrus"
+	cli "github.com/urfave/cli/v2"
+	"github.com/vbatts/is-archived/pkg/gh"
+	"github.com/vbatts/is-archived/pkg/golang"
 	"github.com/vbatts/is-archived/pkg/vcs"
-	"golang.org/x/oauth2"
 )
 
 func init() {
@@ -29,11 +28,21 @@ Testing using `go mod edit -json > mod.json`.
 This could be done as a file, or subshell or on std-in.
 */
 func main() {
+	app := cli.App{
+		Name:   "is-archived",
+		Usage:  "check your project's dep's upstreams for being archived projects",
+		Action: mainFunc,
+	}
+
+	if err := app.Run(os.Args); err != nil {
+		logrus.Fatal(err)
+	}
+}
+
+func mainFunc(c *cli.Context) error {
 	ctx := context.Background()
 
-	var buf []byte
-	var err error
-
+	/* Maybe make 'go' and 'rust' subcommands to use this
 	fi, _ := os.Stdin.Stat()
 	if (fi.Mode() & os.ModeCharDevice) == 0 {
 		logrus.Info("reading from stdin ...")
@@ -41,37 +50,22 @@ func main() {
 		if err != nil {
 			logrus.Fatal(err)
 		}
-	} else if _, err = os.Stat("go.mod"); err == nil {
+	*/
+
+	var m *golang.Mod
+	if _, err := os.Stat("go.mod"); err == nil {
 		logrus.Info("found 'go.mod'. Running `go mod edit -json'")
-		cmd := exec.Command("go", "mod", "edit", "-json")
-		buf, err = cmd.Output()
+		m, err = golang.LoadGoModFile(".")
 		if err != nil {
 			logrus.Fatal(err)
 		}
+	} else if _, err = os.Stat("Cargo.toml"); err == nil {
+		// do the thing
 	} else {
 		logrus.Fatal("no input provided")
 	}
 
-	// get modfile struct
-	m := Mod{}
-	err = json.Unmarshal(buf, &m)
-	if err != nil {
-		logrus.Fatal(err)
-	}
-
-	var client *github.Client
-	if os.Getenv("GITHUB_TOKEN") != "" {
-		// query Github for each repo
-		// needs PAT for rate limiting ...
-
-		ts := oauth2.StaticTokenSource(
-			&oauth2.Token{AccessToken: os.Getenv("GITHUB_TOKEN")},
-		)
-		tc := oauth2.NewClient(ctx, ts)
-		client = github.NewClient(tc)
-	} else {
-		client = github.NewClient(nil)
-	}
+	client := gh.New(ctx, os.Getenv("GITHUB_TOKEN"))
 
 	// collect the list first
 	toCheck := []Check{}
@@ -132,20 +126,11 @@ func main() {
 			fmt.Printf("%q is archived (%s)\n", check.Import, check.VcsUrl.String())
 		}
 	}
+	return nil
 }
 
 type Check struct {
 	Import   string
 	VcsUrl   *urlpkg.URL
 	Archived bool
-}
-
-type Mod struct {
-	Require []Import `json:"Require"`
-}
-
-type Import struct {
-	Path     string `json:"Path"`
-	Version  string `json:"Version"`
-	Indirect bool   `json:"Indirect"`
 }
