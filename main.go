@@ -4,16 +4,15 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	urlpkg "net/url"
 	"os"
 	"strings"
 
-	"github.com/google/go-github/v54/github"
 	"github.com/sirupsen/logrus"
 	cli "github.com/urfave/cli/v2"
+	"github.com/vbatts/is-archived/pkg/check"
+	"github.com/vbatts/is-archived/pkg/cratesio"
 	"github.com/vbatts/is-archived/pkg/gh"
 	"github.com/vbatts/is-archived/pkg/golang"
-	"github.com/vbatts/is-archived/pkg/vcs"
 )
 
 func init() {
@@ -52,85 +51,52 @@ func mainFunc(c *cli.Context) error {
 		}
 	*/
 
-	var m *golang.Mod
+	toCheck := []check.Check{}
 	if _, err := os.Stat("go.mod"); err == nil {
 		logrus.Info("found 'go.mod'. Running `go mod edit -json'")
-		m, err = golang.LoadGoModFile(".")
+		m, err := golang.LoadGoModFile(".")
 		if err != nil {
 			logrus.Fatal(err)
 		}
+		c, err := golang.ToCheck(m)
+		if err != nil {
+			logrus.Fatal(err)
+		}
+		toCheck = append(toCheck, c...)
 	} else if _, err = os.Stat("Cargo.toml"); err == nil {
 		// do the thing
+		logrus.Info("found 'Cargo.toml'")
+		cargo, err := cratesio.LoadCargoFile("Cargo.toml")
+		if err != nil {
+			logrus.Fatal(err)
+		}
+		c, err := cratesio.ToCheck(cargo)
+		if err != nil {
+			logrus.Fatal(err)
+		}
+		toCheck = append(toCheck, c...)
 	} else {
 		logrus.Fatal("no input provided")
 	}
 
 	client := gh.New(ctx, os.Getenv("GITHUB_TOKEN"))
 
-	// collect the list first
-	toCheck := []Check{}
-	for _, req := range m.Require {
-		if !strings.HasPrefix(req.Path, "github.com") {
-			_, mi, err := vcs.MetaImportForPath(req.Path)
-			if err == nil { // ignoring this error as we'll just skip and continue ...
-				if len(mi) == 0 {
-					// we didn't get any meta imports from that import path
-					logrus.Debugf("skipping %q as it had no HTML Meta go-imports", req.Path)
-					continue
-				}
-				u, err := urlpkg.Parse(mi[0].RepoRoot)
-				if err != nil {
-					logrus.Debugf("skipping %q as %q didn't parse well: %v", req.Path, mi[0].RepoRoot, err)
-					continue
-				}
-				if u.Host != "github.com" {
-					logrus.Debugf("skipping %q for now, as it isn't github (%s)", req.Path, u.Host)
-					continue
-				}
-				toCheck = append(toCheck, Check{
-					Import: req.Path,
-					VcsUrl: u,
-				})
-			}
-			continue
-		}
-
-		u, err := urlpkg.Parse(fmt.Sprintf("https://%s", req.Path))
-		if err != nil {
-			logrus.Debugf("skipping %q as %q didn't parse well: %v", req.Path, fmt.Sprintf("https://%s", req.Path), err)
-			continue
-		}
-		toCheck = append(toCheck, Check{
-			Import: req.Path,
-			VcsUrl: u,
-		})
-
-	}
-
 	logrus.Infof("checking %d github projects ...", len(toCheck))
 	for _, check := range toCheck {
-		spl := strings.Split(check.VcsUrl.Path, "/")
-
-		repo, _, err := client.Repositories.Get(ctx, spl[1], spl[2])
-		if err != nil {
-			if _, ok := err.(*github.RateLimitError); ok {
-				logrus.Fatal("rate limited. Try using a Personal Access Token and setting GITHUB_TOKEN env variable: ", err)
-			}
-			if _, ok := err.(*github.AbuseRateLimitError); ok {
-				logrus.Fatal("rate limited. Try using a Personal Access Token and setting GITHUB_TOKEN env variable: ", err)
-			}
-			logrus.Fatal(err)
+		if !strings.HasPrefix(check.VcsUrl.Host, "github.com") {
+			continue
 		}
-		if repo.GetArchived() {
+		org, repo := gh.OrgRepoFromURL(check.VcsUrl)
+		isArchived, err := client.IsRepoArchived(org, repo)
+		if err != nil {
+			logrus.Error(err)
+			continue
+		}
+		if isArchived {
 			check.Archived = true
-			fmt.Printf("%q is archived (%s)\n", check.Import, check.VcsUrl.String())
+			fmt.Printf("%q is archived (%s)\n", check.PkgName, check.VcsUrl.String())
 		}
 	}
+	// TODO print a combined report
 	return nil
-}
-
-type Check struct {
-	Import   string
-	VcsUrl   *urlpkg.URL
-	Archived bool
 }

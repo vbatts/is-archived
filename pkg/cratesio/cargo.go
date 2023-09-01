@@ -7,6 +7,9 @@ import (
 	"github.com/BurntSushi/toml"
 )
 
+// Name for identifying this language support
+const Name = "crates.io (Rust)"
+
 // Cargo is a representation of a `Cargo.toml`.
 // This is bare-bones enough to gather the names of the dependencies
 type Cargo struct {

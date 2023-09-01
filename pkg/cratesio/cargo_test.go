@@ -11,7 +11,7 @@ func TestCargoLoad(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	toCheck := map[string]int{
+	expected := map[string]int{
 		"yall":        0,
 		"tokio":       0,
 		"hard-xml":    0,
@@ -19,7 +19,7 @@ func TestCargoLoad(t *testing.T) {
 		"examplename": 0,
 	}
 	for k := range c.Dependencies {
-		_, ok := toCheck[k]
+		_, ok := expected[k]
 		if !ok {
 			t.Errorf("expected to find %q dependency", k)
 		}
