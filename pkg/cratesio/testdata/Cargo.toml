@@ -1,0 +1,15 @@
+[package]
+name = "testpackage"
+version = "0.1.0"
+edition = "2021"
+
+# sample comment
+
+[dependencies]
+yall = "0.11"
+tokio = { version = "1", features = ["full"] }
+hard-xml = "1.15.0"
+uuid = "1.2"
+
+[dependencies.examplename]
+path = "examplename"

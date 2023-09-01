@@ -2,7 +2,7 @@
 
 check if the repos you're depending on are archived upstream.
 
-Currently checks a golang `go.mod` file.
+Currently checks a golang `go.mod` file and/or a rust `Cargo.toml`
 
 ## Usage
 
@@ -10,9 +10,14 @@ Currently checks a golang `go.mod` file.
 vbatts@weasel:~/src/github.com/vbatts/is-archived$ is-archived
 INFO[0000] found 'go.mod'. Running `go mod edit -json'
 INFO[0000] checking 6 github projects ...
-vbatts@weasel:~/src/github.com/vbatts/is-archived$ go mod edit -json | is-archived
-INFO[0000] reading from stdin ...
-INFO[0000] checking 6 github projects ...
+vbatts@possibly:~/src/cc/image-rs$ is-archived
+INFO[0000] found 'Cargo.toml'                           
+INFO[0000] "" does not match "attestation_agent"        
+INFO[0001] "" does not match "ocicrypt-rs"              
+INFO[0001] "sigstore" does not list a repository        
+INFO[0001] checking 28 github projects ...              
+vbatts@possibly:~/src/cc/image-rs$ 
+
 ```
 
 ## Install
@@ -36,9 +41,13 @@ export GITHUB_TOKEN=<your_github_pat>
 - [x] github repo API
 - [ ] gitlab project API (like https://docs.gitlab.com/ee/api/projects.html#get-single-project)
 - [ ] bitbucket project API (like https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-get)
-- [ ] not just golang `go.mod`
+- [ ] multiple languages
+  - [x] golang `go.mod`
   - [ ] javascript `packages.json`
-  - [ ] rust `Cargo.toml`
+  - [x] rust `Cargo.toml`
+  - [ ] rubygems?
+  - [ ] npm?
+  - [ ] who knows?
 - [x] golang to pull-through the HTML `<meta name="go-import" ...` redirects
 - [ ] detect if stdout is terminal or pipe. If Terminal, then get fancy with [bubbletea](https://github.com/charmbracelet/bubbletea)
 
