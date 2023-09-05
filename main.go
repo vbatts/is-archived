@@ -20,12 +20,6 @@ func init() {
 	logrus.SetOutput(os.Stderr)
 }
 
-/*
-parse a `go.mod` and query github whether any of the github projects are archived.
-
-Testing using `go mod edit -json > mod.json`.
-This could be done as a file, or subshell or on std-in.
-*/
 func main() {
 	app := cli.App{
 		Name:   "is-archived",
