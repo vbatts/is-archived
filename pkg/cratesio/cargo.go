@@ -7,6 +7,8 @@ import (
 	"github.com/BurntSushi/toml"
 )
 
+// https://doc.rust-lang.org/cargo/reference/manifest.html
+
 // Name for identifying this language support
 const Name = "crates.io (Rust)"
 
@@ -19,9 +21,10 @@ type Cargo struct {
 
 // Package is a bare couple of fields from a `Cargo.toml`
 type Package struct {
-	Name    string `toml:"name"`
-	Version string `toml:"version"`
-	Edition string `toml:"edition"`
+	Name       string `toml:"name"`
+	Version    string `toml:"version"`
+	Edition    string `toml:"edition"`
+	Repository string `toml:"repository"`
 }
 
 // LoadCargoFile reads filename and populates the returned Cargo

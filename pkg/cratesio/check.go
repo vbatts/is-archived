@@ -12,6 +12,19 @@ import (
 func ToCheck(c *Cargo) ([]check.Check, error) {
 	toCheck := []check.Check{}
 
+	if c.Package.Repository != "" {
+		u, err := urlpkg.Parse(c.Package.Repository)
+		if err != nil {
+			logrus.Infof("%q did not parse correctly", c.Package.Repository)
+		} else {
+			toCheck = append(toCheck, check.Check{
+				Lang:    c.Package.Name,
+				PkgName: c.Package.Repository,
+				VcsUrl:  u,
+			})
+		}
+	}
+
 	for dep := range c.Dependencies {
 		s, err := FetchSingle(dep)
 		if err != nil {
