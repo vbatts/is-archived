@@ -5,11 +5,30 @@ edition = "2021"
 
 # sample comment
 
+[build-dependencies]
+youins = "0.11"
+
+[dev-dependencies]
+yins = "0.11"
+
 [dependencies]
 yall = "0.11"
 tokio = { version = "1", features = ["full"] }
 hard-xml = "1.15.0"
 uuid = "1.2"
+regex = { git = "https://github.com/rust-lang/regex.git", branch = "next" }
 
 [dependencies.examplename]
 path = "examplename"
+
+[target.'cfg(windows)'.dependencies]
+winhttp = "0.4.0"
+
+[target.'cfg(unix)'.dependencies]
+openssl = "1.0.1"
+
+[target.'cfg(target_arch = "x86")'.dependencies]
+native-i686 = { path = "native/i686" }
+
+[target.'cfg(target_arch = "x86_64")'.dependencies]
+native-x86_64 = { path = "native/x86_64" }

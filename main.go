@@ -18,6 +18,9 @@ import (
 func init() {
 	flag.Parse()
 	logrus.SetOutput(os.Stderr)
+	if os.Getenv("DEBUG") != "" {
+		logrus.SetLevel(logrus.DebugLevel)
+	}
 }
 
 func main() {
