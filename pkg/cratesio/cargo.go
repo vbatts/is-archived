@@ -9,6 +9,7 @@ import (
 )
 
 // https://doc.rust-lang.org/cargo/reference/manifest.html
+// https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html
 
 // Name for identifying this language support
 const Name = "crates.io (Rust)"
@@ -16,7 +17,14 @@ const Name = "crates.io (Rust)"
 // Cargo is a representation of a `Cargo.toml`.
 // This is bare-bones enough to gather the names of the dependencies
 type Cargo struct {
-	Package      Package                `toml:"package"`
+	Package           Package                `toml:"package"`
+	Dependencies      map[string]interface{} `toml:"dependencies"`
+	BuildDependencies map[string]interface{} `toml:"dev-dependencies"`
+	DevDependencies   map[string]interface{} `toml:"build-dependencies"`
+	Target            map[string]Target      `toml:"target"`
+}
+
+type Target struct {
 	Dependencies map[string]interface{} `toml:"dependencies"`
 }
 

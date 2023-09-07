@@ -19,6 +19,7 @@ func TestCargoLoad(t *testing.T) {
 		"hard-xml":    0,
 		"uuid":        0,
 		"examplename": 0,
+		"regex":       0,
 	}
 	for k := range c.Dependencies {
 		_, ok := expected[k]
