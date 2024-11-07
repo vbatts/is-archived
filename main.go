@@ -64,11 +64,23 @@ func mainFunc(c *cli.Context) error {
 		if err != nil {
 			logrus.Fatal(err)
 		}
-		c, err := cratesio.ToCheck(cargo)
+		c, err := cratesio.ToCheckCargo(cargo)
 		if err != nil {
 			logrus.Fatal(err)
 		}
 		toCheck = append(toCheck, c...)
+		if _, err = os.Stat("Cargo.lock"); err == nil {
+			logrus.Info("also found 'Cargo.lock'")
+			cl, err := cratesio.LoadCargoLockFile("Cargo.lock")
+			if err != nil {
+				logrus.Fatal(err)
+			}
+			c, err := cratesio.ToCheckCargoLock(cl)
+			if err != nil {
+				logrus.Fatal(err)
+			}
+			toCheck = append(toCheck, c...)
+		}
 	} else {
 		logrus.Fatal("no input provided")
 	}

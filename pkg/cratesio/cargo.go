@@ -3,6 +3,7 @@ package cratesio
 import (
 	"io"
 	"os"
+	"strings"
 
 	"github.com/BurntSushi/toml"
 )
@@ -25,25 +26,63 @@ type Package struct {
 	Version    string `toml:"version"`
 	Edition    string `toml:"edition"`
 	Repository string `toml:"repository"`
+	Source     string `toml:"source,omitempty"`
+	Checksum   string `toml:"checksum,omitempty"`
 }
 
-// LoadCargoFile reads filename and populates the returned Cargo
+// IsSourceRegistry checks whether the Source field is referring
+// to a cargo registry index, or to a specific repo.
+func (p *Package) IsSourceRegistry() bool {
+	return strings.HasPrefix(p.Source, "registry+http")
+}
+
+type CargoLock struct {
+	Version int64     `toml:"version"`
+	Package []Package `toml:"package"`
+}
+
+// LoadCargoFile reads filename (usually "Cargo.toml") and populates the returned Cargo
 func LoadCargoFile(filename string) (*Cargo, error) {
 	fh, err := os.Open(filename)
 	if err != nil {
 		return nil, err
 	}
 	defer fh.Close()
-	return LoadCargo(fh)
+	return LoadCargoToml(fh)
 }
 
-// LoadCargo reads from the io.Reader and populates the returned Cargo
-func LoadCargo(rdr io.Reader) (*Cargo, error) {
+// LoadCargoLockFile reads filename (usually "Cargo.lock") and populates the returned CargoLock
+func LoadCargoLockFile(filename string) (*CargoLock, error) {
+	fh, err := os.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+	defer fh.Close()
+	return LoadCargoLock(fh)
+}
+
+// LoadCargoToml populates a Cargo structure from an io.Reader of the "Cargo.toml" type file
+func LoadCargoToml(rdr io.Reader) (*Cargo, error) {
 	buf, err := io.ReadAll(rdr)
 	if err != nil {
 		return nil, err
 	}
 	c := Cargo{}
+	_, err = toml.Decode(string(buf), &c)
+	if err != nil {
+		return nil, err
+	}
+	return &c, nil
+}
+
+// LoadCargoLock populates a Cargo structure from an io.Reader of the "Cargo.lock" type file
+func LoadCargoLock(rdr io.Reader) (*CargoLock, error) {
+	buf, err := io.ReadAll(rdr)
+	if err != nil {
+		return nil, err
+	}
+
+	c := CargoLock{}
 	_, err = toml.Decode(string(buf), &c)
 	if err != nil {
 		return nil, err
