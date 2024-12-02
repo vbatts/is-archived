@@ -50,6 +50,7 @@ export GITHUB_TOKEN=<your_github_pat>
     - [Gemfile locks](https://stackoverflow.com/questions/7517524/understanding-the-gemfile-lock-file)
     - [Bundler Lockfile parser](https://github.com/rubygems/rubygems/blob/07e3756fd894e5ded0206bc309dc64ff8ba48f8f/bundler/lib/bundler/lockfile_parser.rb#L4)
   - [ ] npm?
+    - [NPM registry API](https://www.edoardoscibona.com/exploring-the-npm-registry-api)
   - [ ] who knows?
 - [x] golang to pull-through the HTML `<meta name="go-import" ...` redirects
 - [ ] detect if stdout is terminal or pipe. If Terminal, then get fancy with [bubbletea](https://github.com/charmbracelet/bubbletea)
