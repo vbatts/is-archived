@@ -45,7 +45,10 @@ export GITHUB_TOKEN=<your_github_pat>
   - [x] golang `go.mod`
   - [ ] javascript `packages.json`
   - [x] rust `Cargo.toml`
-  - [ ] rubygems?
+  - [ ] rubygems? 
+    - [API](https://guides.rubygems.org/rubygems-org-api/)
+    - [Gemfile locks](https://stackoverflow.com/questions/7517524/understanding-the-gemfile-lock-file)
+    - [Bundler Lockfile parser](https://github.com/rubygems/rubygems/blob/07e3756fd894e5ded0206bc309dc64ff8ba48f8f/bundler/lib/bundler/lockfile_parser.rb#L4)
   - [ ] npm?
   - [ ] who knows?
 - [x] golang to pull-through the HTML `<meta name="go-import" ...` redirects
