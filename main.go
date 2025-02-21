@@ -28,7 +28,6 @@ func main() {
 			}
 			return nil
 		},
-
 		Action: mainFunc,
 		Flags: []cli.Flag{
 			&cli.BoolFlag{
