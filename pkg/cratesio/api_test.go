@@ -28,7 +28,7 @@ func TestParseSingleCrate(t *testing.T) {
 	}
 	defer fh.Close()
 
-	s, err := LoadSingle(fh)
+	s, err := loadSingle(fh)
 	if err != nil {
 		t.Fatalf("failed to load %q: %v", fpath, err)
 	}
