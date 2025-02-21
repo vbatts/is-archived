@@ -80,6 +80,7 @@ func ToCheck(m *Mod) ([]check.Check, error) {
 	// collect the list first
 	toCheck := []check.Check{}
 	for _, req := range m.Require {
+		// TODO this ought to iterate over Repoer's domains as the "known" domains to check.
 		if !strings.HasPrefix(req.Path, "github.com") {
 			_, mi, err := vcs.MetaImportForPath(req.Path)
 			if err == nil { // ignoring this error as we'll just skip and continue ...

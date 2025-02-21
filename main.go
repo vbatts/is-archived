@@ -12,6 +12,7 @@ import (
 	_ "github.com/vbatts/is-archived/pkg/cratesio"
 	"github.com/vbatts/is-archived/pkg/gh"
 	_ "github.com/vbatts/is-archived/pkg/golang"
+	_ "github.com/vbatts/is-archived/pkg/npm"
 	"github.com/vbatts/is-archived/pkg/types"
 )
 
@@ -83,9 +84,6 @@ func mainFunc(c *cli.Context) error {
 
 	if _, err := os.Stat("Gemfile"); err == nil {
 		logrus.Error("ruby Gemfile not implemented yet")
-	}
-	if _, err := os.Stat("package.json"); err == nil {
-		logrus.Error("npm package.json not implemented yet")
 	}
 
 	client := gh.New(ctx, os.Getenv("GITHUB_TOKEN"))
