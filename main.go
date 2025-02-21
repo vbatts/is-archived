@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"flag"
 	"fmt"
 	"os"
 	"strings"
@@ -15,16 +14,29 @@ import (
 	"github.com/vbatts/is-archived/pkg/golang"
 )
 
-func init() {
-	flag.Parse()
-	logrus.SetOutput(os.Stderr)
-}
-
 func main() {
 	app := cli.App{
-		Name:   "is-archived",
-		Usage:  "check your project's dep's upstreams for being archived projects",
+		Name:  "is-archived",
+		Usage: "check your project's dep's upstreams for being archived projects",
+		Before: func(c *cli.Context) error {
+			logrus.SetOutput(os.Stderr)
+			if os.Getenv("DEBUG") != "" {
+				logrus.SetLevel(logrus.DebugLevel)
+			}
+			if c.Bool("debug") {
+				logrus.SetLevel(logrus.DebugLevel)
+			}
+			return nil
+		},
+
 		Action: mainFunc,
+		Flags: []cli.Flag{
+			&cli.BoolFlag{
+				Name:  "debug",
+				Usage: "show debug output",
+				Value: false,
+			},
+		},
 	}
 
 	if err := app.Run(os.Args); err != nil {
