@@ -92,6 +92,10 @@ func mainFunc(c *cli.Context) error {
 			}
 			toCheck = append(toCheck, c...)
 		}
+	} else if _, err = os.Stat("Gemfile"); err == nil {
+		logrus.Error("ruby Gemfile not implemented yet")
+	} else if _, err = os.Stat("package.json"); err == nil {
+		logrus.Error("npm package.json not implemented yet")
 	} else {
 		logrus.Fatal("no input provided")
 	}
