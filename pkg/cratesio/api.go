@@ -42,8 +42,8 @@ type listingMeta struct {
 	Total    int64  `json:"total"`     // _current_ total as of this query. _presumably_ doesn't change during a collection :-D
 }
 
-// LoadSingle populates a Single structure from the provided io.Reader
-func LoadSingle(rdr io.Reader) (*Single, error) {
+// loadSingle populates a Single structure from the provided io.Reader
+func loadSingle(rdr io.Reader) (*Single, error) {
 	s := Single{}
 	buf, err := io.ReadAll(rdr)
 	if err != nil {
@@ -65,7 +65,7 @@ func FetchSingle(pkgname string) (*Single, error) {
 	}
 	defer resp.Body.Close()
 
-	s, err := LoadSingle(resp.Body)
+	s, err := loadSingle(resp.Body)
 	if err != nil {
 		return nil, fmt.Errorf("loading %q: %w", u, err)
 	}
