@@ -38,19 +38,21 @@ export GITHUB_TOKEN=<your_github_pat>
 
 ## Roadmap Ideas
 
-- [x] github repo API
-- [ ] gitlab project API (like https://docs.gitlab.com/ee/api/projects.html#get-single-project)
-- [ ] bitbucket project API (like https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-get)
+- [ ] multiple source code services
+  - [x] github repo API
+  - [ ] gitlab project API (like https://docs.gitlab.com/ee/api/projects.html#get-single-project)
+  - [ ] bitbucket project API (like https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-get)
+  - [ ] gogs/gitea/forgejo API (like https://docs.gitea.com/api/1.23/#tag/repository/operation/repoGet)
 - [ ] multiple languages
   - [x] golang `go.mod`
-  - [ ] javascript `packages.json`
+  - [ ] javascript / npm `packages.json`
+    - [NPM registry API](https://www.edoardoscibona.com/exploring-the-npm-registry-api)
+  - [ ] python / pypi `requirements.txt`
   - [x] rust `Cargo.toml`
-  - [ ] rubygems? 
+  - [ ] ruby / rubygems `Gemfile`
     - [API](https://guides.rubygems.org/rubygems-org-api/)
     - [Gemfile locks](https://stackoverflow.com/questions/7517524/understanding-the-gemfile-lock-file)
     - [Bundler Lockfile parser](https://github.com/rubygems/rubygems/blob/07e3756fd894e5ded0206bc309dc64ff8ba48f8f/bundler/lib/bundler/lockfile_parser.rb#L4)
-  - [ ] npm?
-    - [NPM registry API](https://www.edoardoscibona.com/exploring-the-npm-registry-api)
   - [ ] who knows?
 - [x] golang to pull-through the HTML `<meta name="go-import" ...` redirects
 - [ ] detect if stdout is terminal or pipe. If Terminal, then get fancy with [bubbletea](https://github.com/charmbracelet/bubbletea)
