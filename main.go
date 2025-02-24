@@ -13,6 +13,7 @@ import (
 	"github.com/vbatts/is-archived/pkg/gh"
 	_ "github.com/vbatts/is-archived/pkg/golang"
 	_ "github.com/vbatts/is-archived/pkg/npm"
+	_ "github.com/vbatts/is-archived/pkg/pypi"
 	"github.com/vbatts/is-archived/pkg/types"
 	"github.com/vbatts/is-archived/version"
 )
