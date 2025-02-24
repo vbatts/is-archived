@@ -9,9 +9,10 @@ import (
 	"github.com/sirupsen/logrus"
 	cli "github.com/urfave/cli/v2"
 	"github.com/vbatts/is-archived/pkg/check"
-	"github.com/vbatts/is-archived/pkg/cratesio"
+	_ "github.com/vbatts/is-archived/pkg/cratesio"
 	"github.com/vbatts/is-archived/pkg/gh"
-	"github.com/vbatts/is-archived/pkg/golang"
+	_ "github.com/vbatts/is-archived/pkg/golang"
+	"github.com/vbatts/is-archived/pkg/types"
 )
 
 func main() {
@@ -57,47 +58,34 @@ func mainFunc(c *cli.Context) error {
 	*/
 
 	toCheck := []check.Check{}
-	if _, err := os.Stat("go.mod"); err == nil {
-		logrus.Info("found 'go.mod'. Running `go mod edit -json'")
-		m, err := golang.LoadGoModFile(".")
-		if err != nil {
-			logrus.Fatal(err)
-		}
-		c, err := golang.ToCheck(m)
-		if err != nil {
-			logrus.Fatal(err)
-		}
-		toCheck = append(toCheck, c...)
-	} else if _, err = os.Stat("Cargo.toml"); err == nil {
-		// do the thing
-		logrus.Info("found 'Cargo.toml'")
-		cargo, err := cratesio.LoadCargoFile("Cargo.toml")
-		if err != nil {
-			logrus.Fatal(err)
-		}
-		c, err := cratesio.ToCheckCargo(cargo)
-		if err != nil {
-			logrus.Fatal(err)
-		}
-		toCheck = append(toCheck, c...)
-		if _, err = os.Stat("Cargo.lock"); err == nil {
-			logrus.Info("also found 'Cargo.lock'")
-			cl, err := cratesio.LoadCargoLockFile("Cargo.lock")
+	foundPackagers := false
+	for _, ft := range types.PackagerFileTypes() {
+		if _, err := os.Stat(ft); err == nil {
+			logrus.Infof("found a %q", ft)
+			foundPackagers = true
+			p, err := types.GetPackager(ft)
 			if err != nil {
-				logrus.Fatal(err)
+				logrus.Error(err)
+				continue
 			}
-			c, err := cratesio.ToCheckCargoLock(cl)
+			checks, err := p.LoadFile(ft)
 			if err != nil {
-				logrus.Fatal(err)
+				logrus.Error(err)
+				continue
 			}
-			toCheck = append(toCheck, c...)
+			logrus.Infof("  added %d packages to check", len(checks))
+			toCheck = append(toCheck, checks...)
 		}
-	} else if _, err = os.Stat("Gemfile"); err == nil {
+	}
+	if !foundPackagers {
+		logrus.Fatal("no known packager filetypes found!")
+	}
+
+	if _, err := os.Stat("Gemfile"); err == nil {
 		logrus.Error("ruby Gemfile not implemented yet")
-	} else if _, err = os.Stat("package.json"); err == nil {
+	}
+	if _, err := os.Stat("package.json"); err == nil {
 		logrus.Error("npm package.json not implemented yet")
-	} else {
-		logrus.Fatal("no input provided")
 	}
 
 	client := gh.New(ctx, os.Getenv("GITHUB_TOKEN"))
