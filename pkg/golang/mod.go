@@ -10,10 +10,40 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"github.com/vbatts/is-archived/pkg/check"
+	"github.com/vbatts/is-archived/pkg/types"
 	"github.com/vbatts/is-archived/pkg/vcs"
 )
 
-const Name = "go.mod (golang)"
+const (
+	Name      = "go.mod (golang)"
+	GoModFile = "go.mod"
+)
+
+func init() {
+	if err := types.RegisterPackager(goPackager{fileType: GoModFile}); err != nil {
+		logrus.Errorf("failed to register Packager for %q", GoModFile)
+	}
+}
+
+type goPackager struct {
+	fileType string
+}
+
+func (gp goPackager) Name() string {
+	return Name
+}
+
+func (gp goPackager) FileType() string {
+	return gp.fileType
+}
+
+func (gp goPackager) LoadFile(filename string) ([]check.Check, error) {
+	gmf, err := LoadGoModFile(filename)
+	if err != nil {
+		return nil, err
+	}
+	return ToCheck(gmf)
+}
 
 func LoadGoModFile(fpath string) (*Mod, error) {
 	cmd := exec.Command("go", "mod", "edit", "-json")
