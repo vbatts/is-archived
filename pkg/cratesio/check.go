@@ -19,8 +19,8 @@ func ToCheckCargo(c *Cargo) ([]check.Check, error) {
 			logrus.Infof("%q did not parse correctly", c.Package.Repository)
 		} else {
 			toCheck = append(toCheck, check.Check{
-				Lang:    c.Package.Name,
-				PkgName: c.Package.Repository,
+				Lang:    Name,
+				PkgName: c.Package.Name,
 				VcsUrl:  u,
 			})
 		}

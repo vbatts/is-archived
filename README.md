@@ -45,8 +45,7 @@ export GITHUB_TOKEN=<your_github_pat>
   - [ ] gogs/gitea/forgejo API (like https://docs.gitea.com/api/1.23/#tag/repository/operation/repoGet)
 - [ ] multiple languages
   - [x] golang `go.mod`
-  - [ ] javascript / npm `packages.json`
-    - [NPM registry API](https://www.edoardoscibona.com/exploring-the-npm-registry-api)
+  - [x] javascript / npm `packages.json`
   - [ ] python / pypi `requirements.txt`
   - [x] rust `Cargo.toml`
   - [ ] ruby / rubygems `Gemfile`
