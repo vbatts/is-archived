@@ -1,8 +1,11 @@
 # is-archived
 
-check if the repos you're depending on are archived upstream.
+Check if the repos you're depending on are archived upstream.
 
-Currently checks a golang `go.mod` file and/or a rust `Cargo.toml`
+Currently checks:
+- golang `go.mod`
+- rust `Cargo.toml` and `Cargo.lock`
+- nodejs `package.json`
 
 ## Usage
 
