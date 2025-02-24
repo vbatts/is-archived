@@ -32,7 +32,7 @@ func isEndpointAvailable() bool {
 }
 
 func FetchSingle(pkg string) (*Package, error) {
-	u := fmt.Sprintf("%s/crates/%s", apiEndpoint, pkg)
+	u := fmt.Sprintf("%s/%s", apiEndpoint, pkg)
 
 	req, err := http.NewRequest("GET", u, nil)
 	if err != nil {
