@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/sirupsen/logrus"
+	"github.com/vbatts/is-archived/version"
 )
 
 // https://www.edoardoscibona.com/exploring-the-npm-registry-api
@@ -31,7 +32,15 @@ func isEndpointAvailable() bool {
 }
 
 func FetchSingle(pkg string) (*Package, error) {
-	resp, err := http.Get(fmt.Sprintf("%s/%s", apiEndpoint, pkg))
+	u := fmt.Sprintf("%s/crates/%s", apiEndpoint, pkg)
+
+	req, err := http.NewRequest("GET", u, nil)
+	if err != nil {
+		return nil, fmt.Errorf("fetching %q: %w", u, err)
+	}
+	req.Header.Set("User-Agent", fmt.Sprintf("%s/%s", version.Project, version.Version))
+
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return nil, err
 	}

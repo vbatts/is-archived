@@ -14,12 +14,14 @@ import (
 	_ "github.com/vbatts/is-archived/pkg/golang"
 	_ "github.com/vbatts/is-archived/pkg/npm"
 	"github.com/vbatts/is-archived/pkg/types"
+	"github.com/vbatts/is-archived/version"
 )
 
 func main() {
 	app := cli.App{
-		Name:  "is-archived",
-		Usage: "check your project's dep's upstreams for being archived projects",
+		Name:    "is-archived",
+		Usage:   "check your project's dep's upstreams for being archived projects",
+		Version: version.Version,
 		Before: func(c *cli.Context) error {
 			logrus.SetOutput(os.Stderr)
 			if os.Getenv("DEBUG") != "" {

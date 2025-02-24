@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/google/go-github/github"
+	"github.com/vbatts/is-archived/version"
 	"golang.org/x/oauth2"
 )
 
@@ -32,6 +33,7 @@ func New(ctx context.Context, token string) Handler {
 	} else {
 		h.Client = github.NewClient(nil)
 	}
+	h.Client.UserAgent = fmt.Sprintf("%s/%s", version.Project, version.Version)
 	return h
 }
 
