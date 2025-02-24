@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+
+	"github.com/vbatts/is-archived/version"
 )
 
 /*
@@ -59,7 +61,14 @@ func loadSingle(rdr io.Reader) (*Single, error) {
 // FetchSingle makes a call to the crates.io API regarding pkgname, and populates a returned Single.
 func FetchSingle(pkgname string) (*Single, error) {
 	u := fmt.Sprintf("%s/crates/%s", apiEndpoint, pkgname)
-	resp, err := http.Get(u)
+
+	req, err := http.NewRequest("GET", u, nil)
+	if err != nil {
+		return nil, fmt.Errorf("fetching %q: %w", u, err)
+	}
+	req.Header.Set("User-Agent", fmt.Sprintf("%s/%s", version.Project, version.Version))
+
+	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("fetching %q: %w", u, err)
 	}
