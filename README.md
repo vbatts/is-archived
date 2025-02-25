@@ -6,6 +6,7 @@ Currently checks:
 - golang `go.mod`
 - rust `Cargo.toml` and `Cargo.lock`
 - nodejs `package.json`
+- python `requirements.txt`
 
 ## Usage
 
@@ -49,7 +50,7 @@ export GITHUB_TOKEN=<your_github_pat>
 - [ ] multiple languages
   - [x] golang `go.mod`
   - [x] javascript / npm `packages.json`
-  - [ ] python / pypi `requirements.txt`
+  - [x] python / pypi `requirements.txt`
   - [x] rust `Cargo.toml`
   - [ ] ruby / rubygems `Gemfile`
     - [API](https://guides.rubygems.org/rubygems-org-api/)
