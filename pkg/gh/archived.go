@@ -4,12 +4,43 @@ import (
 	"context"
 	"fmt"
 	urlpkg "net/url"
+	"os"
 	"strings"
 
 	"github.com/google/go-github/github"
+	"github.com/vbatts/is-archived/pkg/check"
+	"github.com/vbatts/is-archived/pkg/types"
 	"github.com/vbatts/is-archived/version"
 	"golang.org/x/oauth2"
 )
+
+const domain = "github.com"
+
+func init() {
+	types.RegisterRepoer(githubRepoer{
+		client: New(context.Background(), os.Getenv("GITHUB_TOKEN")),
+	})
+}
+
+type githubRepoer struct {
+	client Handler
+}
+
+func (r githubRepoer) Domain() string {
+	return domain
+}
+
+func (r githubRepoer) Run(ck *check.Check) error {
+	org, repo := OrgRepoFromURL(ck.VcsUrl)
+	isArchived, err := r.client.IsRepoArchived(org, repo)
+	if err != nil {
+		return err
+	}
+	if isArchived {
+		ck.Archived = true
+	}
+	return nil
+}
 
 type Handler struct {
 	ctx    context.Context

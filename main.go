@@ -1,16 +1,14 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"os"
-	"strings"
 
 	"github.com/sirupsen/logrus"
 	cli "github.com/urfave/cli/v2"
 	"github.com/vbatts/is-archived/pkg/check"
 	_ "github.com/vbatts/is-archived/pkg/cratesio"
-	"github.com/vbatts/is-archived/pkg/gh"
+	_ "github.com/vbatts/is-archived/pkg/gh"
 	_ "github.com/vbatts/is-archived/pkg/golang"
 	_ "github.com/vbatts/is-archived/pkg/npm"
 	_ "github.com/vbatts/is-archived/pkg/pypi"
@@ -49,7 +47,6 @@ func main() {
 }
 
 func mainFunc(c *cli.Context) error {
-	ctx := context.Background()
 
 	/* Maybe make 'go' and 'rust' subcommands to use this
 	fi, _ := os.Stdin.Stat()
@@ -81,30 +78,29 @@ func mainFunc(c *cli.Context) error {
 			toCheck = append(toCheck, checks...)
 		}
 	}
+	if _, err := os.Stat("Gemfile"); err == nil {
+		logrus.Error("ruby Gemfile not implemented yet")
+	}
 	if !foundPackagers {
 		logrus.Fatal("no known packager filetypes found!")
 	}
 
-	if _, err := os.Stat("Gemfile"); err == nil {
-		logrus.Error("ruby Gemfile not implemented yet")
-	}
+	// XXX ok let's see, we'll have a list of all repos "toCheck", and they have
+	// already been only added to the list if the RepoerDomains() shows the
+	// domain as supported.
+	// From this we could either extract and group the checks by domain,
+	// or just iterate through the checks, needing a way to run the appropriate
+	// check for the domain...
 
-	client := gh.New(ctx, os.Getenv("GITHUB_TOKEN"))
-
-	logrus.Infof("checking %d github projects ...", len(toCheck))
-	for _, check := range toCheck {
-		if !strings.HasPrefix(check.VcsUrl.Host, "github.com") {
-			continue
-		}
-		org, repo := gh.OrgRepoFromURL(check.VcsUrl)
-		isArchived, err := client.IsRepoArchived(org, repo)
+	//logrus.Infof("checking %d github projects ...", len(toCheck))
+	for _, ck := range toCheck {
+		err := types.RepoerRun(&ck)
 		if err != nil {
 			logrus.Error(err)
 			continue
 		}
-		if isArchived {
-			check.Archived = true
-			fmt.Printf("%q is archived (%s)\n", check.PkgName, check.VcsUrl.String())
+		if ck.Archived {
+			fmt.Printf("%q is archived (%s)\n", ck.PkgName, ck.VcsUrl.String())
 		}
 	}
 	// TODO print a combined report
