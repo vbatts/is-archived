@@ -51,6 +51,7 @@ export GITHUB_TOKEN=<your_github_pat>
   - [x] golang `go.mod`
   - [x] javascript / npm `packages.json`
   - [x] python / pypi `requirements.txt`
+    - [ ] `pyproject.toml` https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
   - [x] rust `Cargo.toml`
   - [ ] ruby / rubygems `Gemfile`
     - [API](https://guides.rubygems.org/rubygems-org-api/)
