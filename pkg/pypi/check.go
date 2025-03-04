@@ -102,10 +102,11 @@ func ToCheck(reqs []string) ([]check.Check, error) {
 			if err != nil {
 				logrus.Errorf("[pypi] %q Error parsing URL %q", req, pkg.Info.HomePage)
 			} else {
-				// TODO iterate through the domains of the Repoers
-				if u.Host == "github.com" {
-					confidence = 1.0
-					check.VcsUrl = u
+				for _, domain := range types.RepoerDomains() {
+					if u.Host == domain {
+						confidence = 1.0
+						check.VcsUrl = u
+					}
 				}
 			}
 		}
@@ -122,9 +123,10 @@ func ToCheck(reqs []string) ([]check.Check, error) {
 						if err != nil {
 							logrus.Errorf("[pypi] %q Error parsing URL %q", req, v)
 						} else {
-							// TODO iterate through the domains of the Repoers
-							if u.Host == "github.com" {
-								check.VcsUrl = u
+							for _, domain := range types.RepoerDomains() {
+								if u.Host == domain {
+									check.VcsUrl = u
+								}
 							}
 						}
 					}
