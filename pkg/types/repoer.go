@@ -3,6 +3,7 @@ package types
 import (
 	"fmt"
 
+	"github.com/sirupsen/logrus"
 	"github.com/vbatts/is-archived/pkg/check"
 )
 
@@ -39,7 +40,9 @@ func RepoerRun(ck *check.Check) error {
 		}
 		found = true
 
-		rp.Run(ck)
+		if err := rp.Run(ck); err != nil {
+			logrus.Warnf("when checking %q: %s", ck.PkgName, err)
+		}
 	}
 	if !found {
 		return fmt.Errorf("no checks run for %q", ck.PkgName)

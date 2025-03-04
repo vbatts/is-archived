@@ -94,9 +94,10 @@ func mainFunc(c *cli.Context) error {
 
 	//logrus.Infof("checking %d github projects ...", len(toCheck))
 	for _, ck := range toCheck {
+		logrus.Debugf("checking %q (%s)", ck.PkgName, ck.VcsUrl.String())
 		err := types.RepoerRun(&ck)
 		if err != nil {
-			logrus.Error(err)
+			logrus.Warnf("for %q: %s", ck.VcsUrl.String(), err)
 			continue
 		}
 		if ck.Archived {

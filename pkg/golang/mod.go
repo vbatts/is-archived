@@ -76,36 +76,59 @@ type Import struct {
 	Indirect bool   `json:"Indirect"`
 }
 
+func inArray(str string, arr []string) bool {
+	for _, v := range arr {
+		if strings.EqualFold(str, v) {
+			return true
+		}
+	}
+	return false
+}
+
+func hasPrefixArray(str string, arr []string) bool {
+	for _, v := range arr {
+		if strings.HasPrefix(str, v) {
+			return true
+		}
+	}
+	return false
+}
+
 func ToCheck(m *Mod) ([]check.Check, error) {
 	// collect the list first
 	toCheck := []check.Check{}
+	rDomains := types.RepoerDomains()
 	for _, req := range m.Require {
-		// TODO this ought to iterate over Repoer's domains as the "known" domains to check.
-		if !strings.HasPrefix(req.Path, "github.com") {
+		if !hasPrefixArray(req.Path, rDomains) {
+			logrus.Debugf("[%s] inspecting possible meta path %q", Name, req.Path)
 			_, mi, err := vcs.MetaImportForPath(req.Path)
 			if err == nil { // ignoring this error as we'll just skip and continue ...
 				if len(mi) == 0 {
 					// we didn't get any meta imports from that import path
-					logrus.Debugf("skipping %q as it had no HTML Meta go-imports", req.Path)
+					logrus.Debugf("[%s] skipping %q as it had no HTML Meta go-imports", Name, req.Path)
 					continue
 				}
 				u, err := urlpkg.Parse(mi[0].RepoRoot)
 				if err != nil {
-					logrus.Infof("skipping %q as %q didn't parse well: %v", req.Path, mi[0].RepoRoot, err)
+					logrus.Infof("[%s] skipping %q as %q didn't parse well: %v", Name, req.Path, mi[0].RepoRoot, err)
 					continue
 				}
-				toCheck = append(toCheck, check.Check{
-					Lang:    Name,
-					PkgName: req.Path,
-					VcsUrl:  u,
-				})
+				if !inArray(u.Host, rDomains) {
+					logrus.Debugf("[%s] do not have a repo check for %q", Name, u.String())
+				} else {
+					toCheck = append(toCheck, check.Check{
+						Lang:    Name,
+						PkgName: req.Path,
+						VcsUrl:  u,
+					})
+				}
 			}
 			continue
 		}
 
 		u, err := urlpkg.Parse(fmt.Sprintf("https://%s", req.Path))
 		if err != nil {
-			logrus.Debugf("skipping %q as %q didn't parse well: %v", req.Path, fmt.Sprintf("https://%s", req.Path), err)
+			logrus.Debugf("[%s] skipping %q as %q didn't parse well: %v", Name, req.Path, fmt.Sprintf("https://%s", req.Path), err)
 			continue
 		}
 		toCheck = append(toCheck, check.Check{
