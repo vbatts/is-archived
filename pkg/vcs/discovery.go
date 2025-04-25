@@ -111,15 +111,28 @@ func parseMetaGoImports(r io.Reader, mod ModuleMode) ([]MetaImport, error) {
 		if !ok || !strings.EqualFold(e.Name.Local, "meta") {
 			continue
 		}
-		if attrValue(e.Attr, "name") != "go-import" {
-			continue
-		}
-		if f := strings.Fields(attrValue(e.Attr, "content")); len(f) == 3 {
-			imports = append(imports, MetaImport{
-				Prefix:   f[0],
-				VCS:      f[1],
-				RepoRoot: f[2],
-			})
+		if attrValue(e.Attr, "name") == "go-import" {
+			if f := strings.Fields(attrValue(e.Attr, "content")); len(f) == 3 {
+				imports = append(imports, MetaImport{
+					Prefix:   f[0],
+					VCS:      f[1],
+					RepoRoot: f[2],
+				})
+			}
+		} else if attrValue(e.Attr, "name") == "go-source" {
+			if f := strings.Fields(attrValue(e.Attr, "content")); len(f) == 4 {
+				// special handling for gopkg.in as the go-import information does not
+				// contain the repo root, but the go-source information does.
+				if strings.HasPrefix(f[0], "gopkg.in/") {
+					imports = append([]MetaImport{
+						{
+							Prefix:   f[0],
+							VCS:      f[1],
+							RepoRoot: f[2][:strings.Index(f[2], "/tree")],
+						},
+					}, imports...)
+				}
+			}
 		}
 	}
 
