@@ -46,7 +46,7 @@ export GITHUB_TOKEN=<your_github_pat>
   - [x] github repo API
   - [ ] gitlab project API (like https://docs.gitlab.com/ee/api/projects.html#get-single-project)
   - [ ] bitbucket project API (like https://developer.atlassian.com/cloud/bitbucket/rest/api-group-repositories/#api-repositories-workspace-repo-slug-get)
-  - [ ] gogs/gitea/forgejo API (like https://docs.gitea.com/api/1.23/#tag/repository/operation/repoGet)
+  - [x] gogs/gitea/forgejo API (like https://docs.gitea.com/api/1.23/#tag/repository/operation/repoGet)
 - [ ] multiple languages
   - [x] golang `go.mod`
   - [x] javascript / npm `packages.json`

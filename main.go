@@ -8,6 +8,7 @@ import (
 	cli "github.com/urfave/cli/v2"
 	"github.com/vbatts/is-archived/pkg/check"
 	_ "github.com/vbatts/is-archived/pkg/cratesio"
+	_ "github.com/vbatts/is-archived/pkg/forgejo"
 	_ "github.com/vbatts/is-archived/pkg/gh"
 	_ "github.com/vbatts/is-archived/pkg/golang"
 	_ "github.com/vbatts/is-archived/pkg/npm"
