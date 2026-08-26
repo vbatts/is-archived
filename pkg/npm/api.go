@@ -13,9 +13,7 @@ import (
 // https://www.edoardoscibona.com/exploring-the-npm-registry-api
 // https://github.com/npm/registry/blob/main/docs/REGISTRY-API.md
 
-// this endpoint is deprecated
-// const apiEndpoint = "https://registry.npmjs.org/"
-const apiEndpoint = "https://replicate.npmjs.com"
+const apiEndpoint = "https://registry.npmjs.org"
 
 func isEndpointAvailable() bool {
 	resp, err := http.Head(apiEndpoint)

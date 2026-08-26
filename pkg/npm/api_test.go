@@ -12,7 +12,7 @@ func TestEndpoint(t *testing.T) {
 
 	p, err := FetchSingle("help")
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	u, err := url.Parse(p.Repository.URL)
 	if err != nil {
