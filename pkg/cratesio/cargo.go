@@ -65,13 +65,21 @@ func (cp cargoPackager) LoadFile(filename string) ([]check.Check, error) {
 type Cargo struct {
 	Package           Package                `toml:"package"`
 	Dependencies      map[string]interface{} `toml:"dependencies"`
-	BuildDependencies map[string]interface{} `toml:"dev-dependencies"`
-	DevDependencies   map[string]interface{} `toml:"build-dependencies"`
+	BuildDependencies map[string]interface{} `toml:"build-dependencies"`
+	DevDependencies   map[string]interface{} `toml:"dev-dependencies"`
 	Target            map[string]Target      `toml:"target"`
+	Workspace         Workspace              `toml:"workspace,omitempty"`
 }
 
 type Target struct {
 	Dependencies map[string]interface{} `toml:"dependencies"`
+}
+
+// Workspace is https://doc.rust-lang.org/book/ch14-03-cargo-workspaces.html
+type Workspace struct {
+	Resolver     string                 `toml:"resolver"`
+	Members      []string               `toml:"members"`
+	Dependencies map[string]interface{} `toml:"dependencies,omitempty"`
 }
 
 // Package is a bare couple of fields from a `Cargo.toml`
@@ -84,10 +92,16 @@ type Package struct {
 	Checksum   string `toml:"checksum,omitempty"`
 }
 
-// IsSourceRegistry checks whether the Source field is referring
-// to a cargo registry index, or to a specific repo.
-func (p *Package) IsSourceRegistry() bool {
+// IsRegistryHttps checks whether the Source field is referring
+// to a cargo registry index
+func (p *Package) IsRegistryHttps() bool {
 	return strings.HasPrefix(p.Source, "registry+http")
+}
+
+// IsGitHttps checks whether the Source field is referring
+// to a git repo
+func (p *Package) IsGitHttps() bool {
+	return strings.HasPrefix(p.Source, "git+https")
 }
 
 type CargoLock struct {
